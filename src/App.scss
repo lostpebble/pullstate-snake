@@ -1,0 +1,124 @@
+.App {
+  text-align: center;
+  height: 100vh;
+  background: #282c34;
+
+  button {
+    border: none;
+    padding: 1em;
+    border-radius: 2em;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+  button {
+    &.pause {
+      margin-left: 2em;
+    }
+
+    &.reset {
+      margin-right: 2em;
+    }
+  }
+
+  .score {
+    display: flex;
+    align-items: center;
+
+    .text {
+      margin-right: 0.5em;
+    }
+
+    .points {
+      font-size: 2em;
+      color: gold;
+    }
+
+    margin-left: 1em;
+  }
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.speed-buttons {
+  margin-left: 1em;
+
+  button {
+    margin-right: 1em;
+  }
+}
+
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vw;
+  background: #0f0f1f;
+
+  .paused-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 1;
+  }
+
+  .gameover-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    flex-direction: column;
+    background: rgba(239, 98, 103, 0.25);
+    backdrop-filter: blur(5px);
+
+    .gameover-text {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 3em;
+      color: red;
+      margin-bottom: 1em;
+    }
+
+    button {
+      font-size: 2em;
+      background: white;
+      box-shadow: 0 5px 0 black;
+    }
+  }
+
+  .snake-block {
+    position: absolute;
+    //transform: translateX(-50%) translateY(-50%);
+    background: #3cbf61;
+  }
+
+  .item-block {
+    position: absolute;
+    //transform: translateX(-50%) translateY(-50%);
+
+    &.apple {
+      background: #bf4538;
+    }
+
+    &.banana {
+      background: #bfbb54;
+    }
+  }
+}
