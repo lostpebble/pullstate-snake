@@ -10,7 +10,13 @@
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-scripts": "3.1.2",
-    "typescript": "3.6.3"
+    "typescript": "3.6.3",
+    "pullstate": "^1.7.0",
+    "react-hot-keys": "^2.2.0",
+    "fast-deep-equal": "^2.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
   },
   "scripts": {
     "start": "react-scripts start",

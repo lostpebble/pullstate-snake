@@ -1,22 +1,86 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
+  height: 100vh;
+  background: #282c34; }
+  .App button {
+    border: none;
+    padding: 1em;
+    border-radius: 2em; }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-}
+  color: white; }
+  .App-header button.pause {
+    margin-left: 2em; }
+  .App-header button.reset {
+    margin-right: 2em; }
+  .App-header .score {
+    display: flex;
+    align-items: center;
+    margin-left: 1em; }
+    .App-header .score .text {
+      margin-right: 0.5em; }
+    .App-header .score .points {
+      font-size: 2em;
+      color: gold; }
 
 .App-link {
-  color: #09d3ac;
-}
+  color: #09d3ac; }
+
+.speed-buttons {
+  margin-left: 1em; }
+  .speed-buttons button {
+    margin-right: 1em; }
+
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vw;
+  background: #0f0f1f; }
+  .stage .paused-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 1; }
+  .stage .gameover-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    flex-direction: column;
+    background: rgba(239, 98, 103, 0.25);
+    backdrop-filter: blur(5px); }
+    .stage .gameover-box .gameover-text {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 3em;
+      color: red;
+      margin-bottom: 1em; }
+    .stage .gameover-box button {
+      font-size: 2em;
+      background: white;
+      box-shadow: 0 5px 0 black; }
+  .stage .snake-block {
+    position: absolute;
+    background: #3cbf61; }
+  .stage .item-block {
+    position: absolute; }
+    .stage .item-block.apple {
+      background: #bf4538; }
+    .stage .item-block.banana {
+      background: #bfbb54; }
+
+/*# sourceMappingURL=App.css.map */
