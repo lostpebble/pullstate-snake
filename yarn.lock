@@ -7791,10 +7791,10 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
 
-pullstate@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/pullstate/-/pullstate-1.7.0.tgz#e2f9ac0ca8d085f0e33ac4598df5f241e688dcf1"
-  integrity sha512-n7Rjb9W4RvyJEnUgKKGtKGGlWgXogJzlT2oDdEfC95QxXlPvX+n3GvQcXoY3BjDYviKycSlLSvVY9s8+qiWZEA==
+pullstate@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/pullstate/-/pullstate-1.7.1.tgz#b7c0c6e3fe61f48a300eab895debd099fb09c8f9"
+  integrity sha512-Ob+j2giF3KMZD6/doQNYKAWKQe8d7wFRMJjAfb5eYuIU7pZkHkdKxoanKGMJgZfa4eSn8EIf23wd++OU4d+82A==
   dependencies:
     fast-deep-equal "^2.0.1"
     immer "^3.2.0"
