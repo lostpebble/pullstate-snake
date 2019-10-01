@@ -4,6 +4,7 @@ import { Stage } from "./Stage";
 import { useStoreState } from "pullstate";
 import { EGameState, GameStore } from "./state/GameStore";
 import { u_reset, u_togglePause, uc_setSpeed } from "./state/GameUpdaters";
+import ReactHotkeys from "react-hot-keys";
 
 const App: React.FC = () => {
   const [gameState, points] = useStoreState(GameStore, s => [s.gameState, s.stage.points]);
@@ -20,12 +21,9 @@ const App: React.FC = () => {
           Reset
         </button>
         <p>Pullstate Snake Game</p>
-        <button
-          disabled={gameState === EGameState.GAME_OVER}
-          className={"pause"}
-          onClick={() => GameStore.update(u_togglePause)}
-        >
-          {gameState === EGameState.RUNNING ? "Pause" : "Resume"}
+        <ReactHotkeys keyName="space" onKeyDown={() => GameStore.update(u_togglePause)} />
+        <button onClick={() => GameStore.update(u_togglePause)}>
+          {gameState === EGameState.PAUSED ? "Resume (space)" : "Pause (space)"}
         </button>
         <div className={"score"}>
           <span className={"text"}>Score</span>

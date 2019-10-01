@@ -1,9 +1,9 @@
 import { Store } from "pullstate";
 import { createStage } from "./GameStateHelpers";
-import { u_nextStep } from "./GameUpdaters";
+import { u_nextStep, u_rollAndAddRandomItem } from "./GameUpdaters";
 
 // [x, y]
-type TStageCoordinate = [number, number];
+export type TPosition = [number, number];
 
 export enum EItemType {
   apple = "apple",
@@ -12,10 +12,11 @@ export enum EItemType {
 
 export interface IItem {
   type: EItemType;
-  pos: TStageCoordinate;
+  pos: TPosition;
   lifetime: number;
   created: number;
-  points: number;
+  value: number;
+  digestionValue: number;
 }
 
 export enum EDirection {
@@ -27,8 +28,8 @@ export enum EDirection {
 
 export interface IStage {
   items: IItem[];
-  snake: TStageCoordinate[];
-  currentDirection: EDirection;
+  snake: TPosition[];
+  direction: EDirection;
   width: number;
   height: number;
   points: number;
@@ -55,21 +56,14 @@ export const GameStore = new Store<IGameStore>({
 });
 
 // Game Loop Things
-let gameInterval: any = null;
+let gameLoopInterval: any = null;
 
-GameStore.subscribe(
-  s => [s.gameState, s.speed],
-  ([state, speed]) => {
-    clearInterval(gameInterval);
-    console.log(`setting interval ${state}`);
+GameStore.subscribe(s => [s.gameState, s.speed], ([state, speed]) => {
+  clearInterval(gameLoopInterval);
 
-    if (state === EGameState.RUNNING) {
-      gameInterval = setInterval(
-        () => {
-          GameStore.update([u_nextStep]);
-        },
-        speed as number
-      );
-    }
+  if (state === EGameState.RUNNING) {
+    gameLoopInterval = setInterval(() => {
+      GameStore.update([u_nextStep, u_rollAndAddRandomItem]);
+    }, speed as number)
   }
-);
+});

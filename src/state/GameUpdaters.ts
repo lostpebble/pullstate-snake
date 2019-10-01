@@ -1,40 +1,44 @@
 import { TUpdateFunction } from "pullstate";
 import isEqual from "fast-deep-equal";
-import { EDirection, EGameState, EItemType, IGameStore, IItem, } from "./GameStore";
+import { EDirection, EGameState, EItemType, IGameStore, IItem, TPosition } from "./GameStore";
 import { createStage, randomPosition } from "./GameStateHelpers";
 
 type TGameUpdater = TUpdateFunction<IGameStore>;
 
-export const u_addRandomItem: TGameUpdater = (s, o) => {
-  let pos: [number, number] = randomPosition(o.stage.width - 1, o.stage.height - 1);
+const itemCreateChance = 0.25;
 
-  while (o.stage.snake.some(snakeBlockPos => isEqual(pos, snakeBlockPos))) {
-    pos = randomPosition(o.stage.width, o.stage.height);
+export const u_rollAndAddRandomItem: TGameUpdater = (s, o) => {
+  if (itemCreateChance >= Math.random()) {
+    let pos: TPosition = randomPosition(o.stage.width, o.stage.height);
+
+    while (o.stage.snake.some(snakePos => isEqual(snakePos, pos))) {
+      pos = randomPosition(o.stage.width, o.stage.height);
+    }
+
+    const item: IItem = {
+      type: EItemType.apple,
+      pos,
+      created: o.stage.curFrame,
+      lifetime: 20,
+      value: 1,
+      digestionValue: 1,
+    };
+
+    if (Math.random() > 0.5) {
+      item.type = EItemType.banana;
+      item.value = 3;
+      item.digestionValue = 2;
+    }
+
+    s.stage.items.push(item);
   }
-
-  let item: IItem = {
-    type: EItemType.apple,
-    lifetime: 20,
-    created: o.stage.curFrame,
-    pos: pos,
-    points: 1,
-  };
-
-  if (Math.random() > 0.5) {
-    item.type = EItemType.banana;
-    item.points = 3;
-  }
-
-  s.stage.items.push(item);
 };
-
-const itemCreateChance = 0.1;
 
 export const u_nextStep: TGameUpdater = (s, o) => {
   const [x, y] = o.stage.snake[0];
   let nextPosition: [number, number];
 
-  switch (o.stage.currentDirection) {
+  switch (o.stage.direction) {
     case EDirection.N:
       nextPosition = [x, y - 1];
       break;
@@ -72,23 +76,17 @@ export const u_nextStep: TGameUpdater = (s, o) => {
     const keepItems: IItem[] = [];
     const newFrame = o.stage.curFrame + 1;
 
-    o.stage.items.forEach((item, index) => {
+    o.stage.items.forEach(item => {
       if (isEqual(item.pos, nextPosition)) {
-        s.stage.points += item.points;
-        s.stage.digestion += item.type === EItemType.banana ? 2 : 1;
-        // no keep
+        s.stage.points += item.value;
+        s.stage.digestion += item.digestionValue;
       } else if (item.created + item.lifetime > newFrame) {
         keepItems.push(item);
-        // keep
       }
     });
 
     s.stage.items = keepItems;
     s.stage.curFrame = newFrame;
-
-    if (Math.random() <= itemCreateChance) {
-      u_addRandomItem(s, o);
-    }
   }
 };
 
@@ -98,7 +96,7 @@ export const u_reset: TGameUpdater = (s, o) => {
 };
 
 export const uc_changeDirection = (direction: EDirection): TGameUpdater => s => {
-  s.stage.currentDirection = direction;
+  s.stage.direction = direction;
 };
 
 export const uc_setGameState = (state: EGameState): TGameUpdater => (s, o) => {

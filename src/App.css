@@ -1,11 +1,15 @@
 .App {
   text-align: center;
   height: 100vh;
-  background: #282c34; }
+  background: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
   .App button {
-    border: none;
+    margin: 1em;
     padding: 1em;
-    border-radius: 2em; }
+    border-radius: 5em;
+    border: none; }
 
 .App-header {
   background-color: #282c34;
@@ -40,8 +44,12 @@
 .stage {
   position: relative;
   width: 100vw;
+  max-width: calc(100vh - 15em);
   height: 100vw;
-  background: #0f0f1f; }
+  max-height: calc(100vh - 15em);
+  background: #0d0f18;
+  box-shadow: inset 0 0 5em 5px black;
+  border-radius: 1em; }
   .stage .paused-box {
     position: absolute;
     top: 0;
@@ -72,7 +80,7 @@
     .stage .gameover-box button {
       font-size: 2em;
       background: white;
-      box-shadow: 0 5px 0 black; }
+      box-shadow: 0 5px 10px black; }
   .stage .snake-block {
     position: absolute;
     background: #3cbf61; }

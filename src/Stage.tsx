@@ -2,13 +2,13 @@ import { useStoreState } from "pullstate";
 import React, { useEffect } from "react";
 import ReactHotkeys from "react-hot-keys";
 import { EDirection, EGameState, GameStore } from "./state/GameStore";
-import { u_addRandomItem, u_reset, uc_changeDirection, uc_setGameState } from "./state/GameUpdaters";
+import { u_rollAndAddRandomItem, u_reset, uc_changeDirection, uc_setGameState } from "./state/GameUpdaters";
 
 export const Stage = () => {
   const [{ snake, items, width, height }, state] = useStoreState(GameStore, s => [s.stage, s.gameState]);
 
   useEffect(() => {
-    GameStore.update([u_addRandomItem, uc_setGameState(EGameState.RUNNING)]);
+    GameStore.update([u_rollAndAddRandomItem, uc_setGameState(EGameState.RUNNING)]);
   }, []);
 
   let snakeHeadRadius = "0";
@@ -33,13 +33,8 @@ export const Stage = () => {
       {state === EGameState.GAME_OVER && (
         <div className={"gameover-box"}>
           <span className={"gameover-text"}>Game Over :(</span>
-          <button
-            onClick={() => {
-              GameStore.update(u_reset);
-            }}
-          >
-            Reset
-          </button>
+          <ReactHotkeys keyName="enter" onKeyDown={() => GameStore.update(u_reset)} />
+          <button onClick={() => GameStore.update(u_reset)}>Try Again (Enter)</button>
         </div>
       )}
       {state === EGameState.PAUSED && <div className={"paused-box"} />}
